@@ -1,0 +1,818 @@
+/* =====================================================================
+   WikiDécouverte PLAY — styles du jeu
+   Palette héritée de style.css (crème, prune, rose), accents futuristes.
+   ===================================================================== */
+
+/* ===== Bouton JOUER (coin supérieur gauche) ===== */
+.play-open {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(120deg, #6e2039 0%, #3d2436 55%, #c98aa0 130%);
+  box-shadow: 0 8px 22px rgba(61, 36, 54, 0.4);
+  transition: transform 0.14s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.play-open-ico { font-size: 1.15rem; }
+
+.play-open:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(61, 36, 54, 0.5);
+  filter: brightness(1.08);
+}
+
+.play-open:active { transform: scale(0.97); }
+
+.play-open:focus-visible {
+  outline: 3px solid #e5b8c4;
+  outline-offset: 3px;
+}
+
+/* Empêche le défilement du site derrière l'overlay */
+body.play-open-lock { overflow: hidden; }
+
+/* ===== Overlay plein écran ===== */
+.play-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow-y: auto;
+  background:
+    radial-gradient(900px 500px at 80% -10%, rgba(201, 138, 160, 0.25), transparent 60%),
+    radial-gradient(800px 500px at 0% 100%, rgba(110, 32, 57, 0.28), transparent 60%),
+    linear-gradient(160deg, #241019 0%, #2a1826 55%, #140a12 100%);
+  color: #f6efe7;
+  padding: 24px 16px 48px;
+}
+
+.play-overlay[hidden] { display: none; }
+
+/* ===== Écran générique ===== */
+.play-screen {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.play-animate-in {
+  animation: play-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes play-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== En-tête de l'accueil ===== */
+.play-header {
+  text-align: center;
+  position: relative;
+  padding: 20px 0 10px;
+}
+
+.play-title {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, #e5b8c4, #fff 40%, #c98aa0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 30px rgba(229, 184, 196, 0.3);
+}
+
+.play-intro {
+  margin-top: 8px;
+  color: #d9c6cf;
+  font-size: 1rem;
+}
+
+.play-close {
+  margin-top: 14px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: #f6efe7;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.play-close:hover { background: rgba(255, 255, 255, 0.16); }
+.play-close:focus-visible { outline: 2px solid #e5b8c4; outline-offset: 2px; }
+
+/* ===== Blocs de choix ===== */
+.play-block { margin-top: 24px; }
+
+.play-block-title {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.15rem;
+  color: #e5b8c4;
+  margin-bottom: 12px;
+}
+
+.play-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.play-option {
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #f6efe7;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.play-option:hover:not(:disabled) {
+  background: rgba(229, 184, 196, 0.18);
+  transform: translateY(-1px);
+}
+
+.play-option.is-selected {
+  background: linear-gradient(120deg, #6e2039, #c98aa0);
+  border-color: transparent;
+  color: #fff;
+}
+
+.play-option:disabled { opacity: 0.4; cursor: not-allowed; }
+.play-option:focus-visible { outline: 2px solid #e5b8c4; outline-offset: 2px; }
+
+/* ===== Cartes de format (5) ===== */
+.play-formats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+/* Un peu plus d'air pour laisser les cartes s'agrandir sans se chevaucher */
+.play-formats {
+  align-items: start;
+}
+
+.play-format-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* repos : icône + nom centrés */
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  font-family: inherit;
+  color: #f6efe7;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 20px 18px;
+  cursor: pointer;
+  overflow: hidden;         /* la lueur reste dans la carte */
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s ease, border-color 0.25s ease, background 0.25s ease;
+  animation: play-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 0.06s);
+}
+
+/* Lueur rose derrière le contenu (cachée au repos) */
+.play-format-card::before {
+  content: "";
+  position: absolute;
+  inset: -40% -10%;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(229, 184, 196, 0.55), transparent 65%);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+/* Le contenu passe au-dessus de la lueur */
+.pf-icon, .pf-name, .pf-desc { position: relative; z-index: 1; }
+
+.pf-icon {
+  font-size: 1.7rem;
+  transition: transform 0.28s ease;
+}
+.pf-name { font-weight: 700; font-size: 1.05rem; }
+
+/* Description masquée au repos, dévoilée au survol/focus/sélection */
+.pf-desc {
+  font-size: 0.85rem;
+  color: #f1dde4;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(4px);
+  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease, margin-top 0.3s ease;
+}
+
+/* --- Carte sélectionnée (état calme, repère visuel discret) --- */
+.play-format-card.is-selected {
+  border-color: #e5b8c4;
+  background: linear-gradient(160deg, rgba(201, 138, 160, 0.22), rgba(110, 32, 57, 0.28));
+  box-shadow: 0 0 0 2px rgba(229, 184, 196, 0.35);
+}
+
+/* --- État ACTIF au survol / focus : agrandissement marqué + lueur ---
+   Vaut pour TOUTES les cartes, y compris celle déjà sélectionnée (Quiz). */
+.play-format-card:hover,
+.play-format-card:focus-visible {
+  transform: translateY(-10px) scale(1.12);
+  z-index: 2;                /* passe au-dessus des cartes voisines */
+  border-color: #f2d9e0;
+  background: linear-gradient(160deg, rgba(201, 138, 160, 0.3), rgba(110, 32, 57, 0.35));
+  box-shadow: 0 26px 55px rgba(110, 32, 57, 0.55);
+}
+
+.play-format-card:focus-visible {
+  outline: 2px solid #e5b8c4;
+  outline-offset: 3px;
+}
+
+/* Lueur révélée uniquement au survol / focus */
+.play-format-card:hover::before,
+.play-format-card:focus-visible::before {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Icône qui grossit uniquement au survol / focus */
+.play-format-card:hover .pf-icon,
+.play-format-card:focus-visible .pf-icon {
+  transform: scale(1.3);
+}
+
+/* Description dévoilée uniquement au survol / focus
+   (la carte sélectionnée reste sobre : juste icône + nom, comme les autres) */
+.play-format-card:hover .pf-desc,
+.play-format-card:focus-visible .pf-desc {
+  max-height: 60px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 4px;
+}
+
+/* ===== Pied d'accueil ===== */
+.play-home-footer {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.play-best {
+  font-size: 1rem;
+  color: #e5b8c4;
+  margin-bottom: 14px;
+}
+
+.play-start {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #2a1826;
+  background: linear-gradient(120deg, #e5b8c4, #fff 55%, #c98aa0);
+  border: none;
+  padding: 14px 34px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(229, 184, 196, 0.35);
+  transition: transform 0.14s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+.play-start:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.play-start:active { transform: scale(0.97); }
+.play-start:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+.play-note {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: #a98f99;
+  font-style: italic;
+}
+
+/* ===== HUD (pendant la partie) ===== */
+.play-hud {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.hud-score strong { color: #e5b8c4; font-size: 1.15rem; }
+.hud-progress { color: #d9c6cf; }
+.hud-time { color: #d9c6cf; }
+.hud-time[hidden] { display: none; }
+
+.hud-quit {
+  margin-left: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f6efe7;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.hud-quit:hover { background: rgba(255, 255, 255, 0.18); }
+.hud-quit:focus-visible { outline: 2px solid #e5b8c4; outline-offset: 2px; }
+
+.play-sub { color: #cbb6bf; margin-bottom: 14px; font-size: 0.9rem; }
+
+/* ===== Carte de question (Quiz / VF / WhoAmI) ===== */
+.play-qcard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  padding: 26px;
+}
+
+.q-cat {
+  display: inline-block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #c98aa0;
+  margin-bottom: 8px;
+}
+
+.q-text {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 18px;
+  line-height: 1.3;
+}
+
+/* Options Quiz */
+.q-options { display: grid; gap: 10px; }
+
+.q-option {
+  font-family: inherit;
+  font-size: 0.98rem;
+  text-align: left;
+  color: #f6efe7;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 14px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+}
+.q-option:hover:not(:disabled) { background: rgba(229, 184, 196, 0.16); transform: translateY(-1px); }
+.q-option:disabled { cursor: default; }
+.q-option.is-correct {
+  background: linear-gradient(120deg, #1f6e4a, #43b581);
+  border-color: transparent; color: #fff;
+}
+.q-option.is-wrong {
+  background: linear-gradient(120deg, #6e2039, #c0485f);
+  border-color: transparent; color: #fff;
+}
+.q-option:focus-visible { outline: 2px solid #e5b8c4; outline-offset: 2px; }
+
+/* Vrai / Faux */
+.q-tf { display: flex; gap: 14px; }
+.q-tf-btn {
+  flex: 1;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #f6efe7;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.2s ease;
+}
+.q-tf-btn:hover:not(:disabled) { transform: translateY(-2px); background: rgba(229, 184, 196, 0.16); }
+.q-tf-btn.is-correct { background: linear-gradient(120deg, #1f6e4a, #43b581); border-color: transparent; color: #fff; }
+.q-tf-btn.is-wrong { background: linear-gradient(120deg, #6e2039, #c0485f); border-color: transparent; color: #fff; }
+.q-tf-btn:focus-visible { outline: 2px solid #e5b8c4; outline-offset: 2px; }
+
+/* Explication + bouton suivant */
+.q-exp {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 3px solid #c98aa0;
+  border-radius: 8px;
+  color: #e9dbe1;
+  font-size: 0.92rem;
+}
+.q-exp[hidden] { display: none; }
+
+.play-next {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: inherit;
+  font-weight: 600;
+  color: #2a1826;
+  background: linear-gradient(120deg, #e5b8c4, #c98aa0);
+  border: none;
+  padding: 12px 26px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.2s ease;
+}
+.play-next:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.play-next:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* ===== Memory ===== */
+/* Cartes compactes : la grille tient sur une seule page. On limite aussi la
+   largeur totale et la hauteur des cartes pour éviter tout défilement. */
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), 1fr);
+  gap: 8px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.memory-card {
+  aspect-ratio: 4 / 3;
+  max-height: 92px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  perspective: 800px;
+}
+.memory-card:focus-visible { outline: 2px solid #e5b8c4; outline-offset: 2px; border-radius: 12px; }
+
+.mc-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.memory-card.is-flipped .mc-inner { transform: rotateY(180deg); }
+
+.mc-front, .mc-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  padding: 5px;
+  text-align: center;
+  font-size: 0.78rem;
+  line-height: 1.15;
+}
+.mc-front {
+  background: linear-gradient(160deg, #6e2039, #3d2436);
+  color: #e5b8c4;
+  font-size: 1.3rem;
+  border: 1px solid rgba(229, 184, 196, 0.3);
+}
+.mc-back {
+  background: linear-gradient(160deg, #f6efe7, #e5b8c4);
+  color: #2a1826;
+  transform: rotateY(180deg);
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.memory-card.is-done { opacity: 0.55; }
+.mc-match .mc-back { animation: mc-pop 0.5s ease; }
+@keyframes mc-pop {
+  0% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.6); }
+  50% { box-shadow: 0 0 0 6px rgba(67, 181, 129, 0); }
+  100% { box-shadow: none; }
+}
+
+/* ===== Défi chronologique ===== */
+.chrono-list { list-style: none; display: grid; gap: 10px; }
+.chrono-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+.chrono-label { color: #f6efe7; }
+.chrono-controls { display: flex; gap: 6px; }
+.chrono-move {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f6efe7;
+  cursor: pointer;
+}
+.chrono-move:hover { background: rgba(229, 184, 196, 0.2); }
+.chrono-move:focus-visible { outline: 2px solid #e5b8c4; outline-offset: 2px; }
+.chrono-correct { color: #e9dbe1; margin: 10px 0 0 20px; display: grid; gap: 6px; }
+
+/* ===== Qui suis-je ? ===== */
+.whoami-clues { color: #f1e6ea; margin: 0 0 16px 20px; display: grid; gap: 8px; }
+.whoami-actions { margin-bottom: 14px; }
+.whoami-answer { display: flex; gap: 10px; }
+.whoami-input {
+  flex: 1;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.95);
+  color: #2a1826;
+}
+.whoami-input:focus-visible { outline: 3px solid #e5b8c4; outline-offset: 2px; }
+
+/* ===== Écran de résultats ===== */
+.play-results { text-align: center; padding-top: 20px; }
+.play-result-title {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: #fff;
+  margin-bottom: 10px;
+}
+.play-score-big {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(3rem, 12vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(90deg, #e5b8c4, #fff, #c98aa0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 10px 0 18px;
+  animation: score-pop 0.6s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+}
+@keyframes score-pop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+.play-result-details { color: #e9dbe1; display: grid; gap: 6px; margin-bottom: 22px; }
+.play-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* ===== Toast + info ===== */
+.play-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: rgba(42, 24, 38, 0.95);
+  border: 1px solid rgba(229, 184, 196, 0.4);
+  color: #f6efe7;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  z-index: 120;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Confettis (record) ===== */
+.play-confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 130;
+  overflow: hidden;
+}
+.confetti-bit {
+  position: absolute;
+  top: -10px;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  animation: confetti-fall 1.6s ease-in forwards;
+}
+@keyframes confetti-fall {
+  to { transform: translateY(105vh) rotate(540deg); opacity: 0.2; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 560px) {
+  .play-open { top: 12px; left: 12px; padding: 9px 14px; font-size: 0.85rem; }
+  .play-qcard { padding: 18px; }
+  .q-text { font-size: 1.2rem; }
+  .q-tf { flex-direction: column; }
+  .memory-grid { grid-template-columns: repeat(var(--cols, 2), 1fr) !important; }
+  .whoami-answer { flex-direction: column; }
+}
+
+/* ===== Réduction des animations ===== */
+@media (prefers-reduced-motion: reduce) {
+  .play-animate-in,
+  .play-format-card,
+  .play-score-big { animation: none !important; }
+  .mc-inner { transition: none; }
+  .confetti-bit { display: none; }
+}
+
+/* =====================================================================
+   MAP CHALLENGE — jeu de géographie
+   ===================================================================== */
+
+/* Sélection de région */
+.map-region-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.map-region-btn {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f6efe7;
+  background: linear-gradient(160deg, rgba(201, 138, 160, 0.18), rgba(110, 32, 57, 0.22));
+  border: 1px solid rgba(229, 184, 196, 0.35);
+  border-radius: 14px;
+  padding: 18px 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+}
+.map-region-btn:hover {
+  transform: translateY(-3px);
+  border-color: #e5b8c4;
+  box-shadow: 0 12px 26px rgba(110, 32, 57, 0.4);
+}
+.map-region-btn:focus-visible { outline: 2px solid #e5b8c4; outline-offset: 2px; }
+
+/* Plateau de carte */
+.map-wrap { margin-bottom: 16px; }
+.map-board {
+  position: relative;
+  width: 100%;
+  max-width: 560px;          /* cartes régionales : plutôt verticales */
+  margin: 0 auto;
+  aspect-ratio: 3 / 4;       /* proche du format portrait de tes images */
+  background:
+    radial-gradient(120% 120% at 50% 20%, rgba(201,138,160,0.10), transparent 60%),
+    linear-gradient(160deg, #241019, #2a1826);
+  border: 1px solid rgba(229, 184, 196, 0.25);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* La carte du monde est plus grande et large (format paysage) */
+.map-board.map-board--world {
+  max-width: 1000px;
+  aspect-ratio: 16 / 10;
+}
+
+/* Carte de fond (image de la région, derrière les points) */
+.map-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* "contain" : la carte s'affiche ENTIÈRE, droite et sans déformation. */
+  object-fit: contain;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  opacity: 1;
+}
+
+/* Badges numérotés : le joueur relie un nom à un numéro. */
+.map-spot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* La pastille ronde avec le numéro */
+.map-zone-num {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #2a1826;
+  background: linear-gradient(160deg, #f6efe7, #e5b8c4);
+  border: 2px solid #c98aa0;
+  box-shadow: 0 2px 8px rgba(42, 24, 38, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.map-spot:hover .map-zone-num {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 4px rgba(229, 184, 196, 0.4);
+}
+.map-spot.is-target .map-zone-num {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 7px rgba(229, 184, 196, 0.5);
+}
+
+/* Une fois trouvé : la pastille passe au vert et le nom apparaît */
+.map-spot.is-found .map-zone-num {
+  background: linear-gradient(160deg, #6fe3ad, #43b581);
+  border-color: #6fe3ad;
+  color: #10351f;
+  box-shadow: 0 0 12px rgba(67, 181, 129, 0.7);
+}
+.map-spot-name {
+  font-size: 0.72rem;
+  color: #fff;
+  background: rgba(31, 110, 74, 0.92);
+  padding: 2px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(67, 181, 129, 0.6);
+}
+.map-spot:focus-visible { outline: 2px solid #e5b8c4; outline-offset: 2px; border-radius: 8px; }
+
+/* Étiquettes de pays à placer */
+.map-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.map-tag {
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: #2a1826;
+  background: linear-gradient(160deg, #f6efe7, #e5b8c4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: grab;
+  transition: transform 0.12s ease, box-shadow 0.2s ease;
+}
+.map-tag:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
+.map-tag:active { cursor: grabbing; }
+.map-tag.is-selected {
+  outline: 3px solid #e5b8c4;
+  outline-offset: 2px;
+  box-shadow: 0 0 18px rgba(229, 184, 196, 0.6);
+}
+.map-tag:focus-visible { outline: 3px solid #e5b8c4; outline-offset: 2px; }
+
+.map-hint {
+  text-align: center;
+  color: #e5b8c4;
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+.map-missed {
+  color: #f0c0cb !important;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Petit tremblement du HUD lors d'une erreur */
+.hud-shake { animation: hud-shake 0.4s ease; }
+@keyframes hud-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (max-width: 560px) {
+  .map-board { aspect-ratio: 4 / 5; }
+  .map-spot-name { font-size: 0.65rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-shake { animation: none; }
+}
